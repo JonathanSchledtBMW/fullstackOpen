@@ -16,13 +16,10 @@ const Part = ({ part }) => (
 );
 
 const Total = ({ parts }) => {
-	console.log(parts);
 	const total = parts.reduce(
 		(accumulator, currentValue) => accumulator + currentValue.exercises,
 		0
 	);
-	console.log(total);
-
 	return (
 		<p>
 			<strong>total of {total} exercises</strong>
