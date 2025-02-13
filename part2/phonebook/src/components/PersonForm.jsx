@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const PersonForm = ({
 	handleNameChange,
 	handleNumberChange,
@@ -17,7 +19,7 @@ const PersonForm = ({
 		}
 	};
 
-	const addNameNumber = (event) => {
+	const addPerson = (event) => {
 		event.preventDefault();
 		const personObject = {
 			name: newName,
@@ -27,7 +29,11 @@ const PersonForm = ({
 		if (personExists()) {
 			alert(`${newName} is already added to phonebook`);
 		} else {
-			setPersons(persons.concat(personObject));
+			axios
+				.post("http://localhost:3001/persons", personObject)
+				.then((response) => {
+					setPersons(persons.concat(response.data));
+				});
 		}
 
 		setNewName("");
@@ -35,7 +41,7 @@ const PersonForm = ({
 	};
 
 	return (
-		<form onSubmit={addNameNumber}>
+		<form onSubmit={addPerson}>
 			<div>
 				name: <input value={newName} onChange={handleNameChange} required />
 			</div>
