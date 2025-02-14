@@ -1,4 +1,4 @@
-import axios from "axios";
+import personService from "../services/persons";
 
 const PersonForm = ({
 	handleNameChange,
@@ -29,11 +29,9 @@ const PersonForm = ({
 		if (personExists()) {
 			alert(`${newName} is already added to phonebook`);
 		} else {
-			axios
-				.post("http://localhost:3001/persons", personObject)
-				.then((response) => {
-					setPersons(persons.concat(response.data));
-				});
+			personService.create(personObject).then((returnedPerson) => {
+				setPersons(persons.concat(returnedPerson));
+			});
 		}
 
 		setNewName("");
