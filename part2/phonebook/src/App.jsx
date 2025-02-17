@@ -14,7 +14,7 @@ const App = () => {
 		personService.getAll().then((initialPersons) => {
 			setPersons(initialPersons);
 		});
-	}, []);
+	}, [persons]);
 
 	const handleNameChange = (event) => {
 		setNewName(event.target.value);

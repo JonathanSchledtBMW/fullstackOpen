@@ -12,6 +12,7 @@ const PersonForm = ({
 }) => {
 	const personExists = () => {
 		const personObject = persons.find((person) => person.name === newName);
+
 		if (personObject) {
 			return true;
 		} else {
@@ -25,9 +26,26 @@ const PersonForm = ({
 			name: newName,
 			number: newNumber,
 		};
+		const personObjectId = persons.find((person) => person.name === newName);
+
+		const changedPerson = { ...personObject, number: newNumber };
 
 		if (personExists()) {
-			alert(`${newName} is already added to phonebook`);
+			if (
+				window.confirm(
+					`${newName} is already added to phonebook, replace the old number with a new one?`
+				)
+			) {
+				personService
+					.update(personObjectId.id, changedPerson)
+					.then((returnedPerson) => {
+						setPersons(
+							persons.map((person) =>
+								person.id !== personObject.id ? person : returnedPerson
+							)
+						);
+					});
+			}
 		} else {
 			personService.create(personObject).then((returnedPerson) => {
 				setPersons(persons.concat(returnedPerson));
