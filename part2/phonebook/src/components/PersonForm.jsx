@@ -9,6 +9,7 @@ const PersonForm = ({
 	setPersons,
 	setNewName,
 	setNewNumber,
+	setMessage,
 }) => {
 	const personExists = () => {
 		const personObject = persons.find((person) => person.name === newName);
@@ -45,11 +46,19 @@ const PersonForm = ({
 							)
 						);
 					});
+				setMessage(`Updated ${newName}`);
+				setTimeout(() => {
+					setMessage(null);
+				}, 5000);
 			}
 		} else {
 			personService.create(personObject).then((returnedPerson) => {
 				setPersons(persons.concat(returnedPerson));
 			});
+			setMessage(`Added ${newName}`);
+			setTimeout(() => {
+				setMessage(null);
+			}, 5000);
 		}
 
 		setNewName("");
