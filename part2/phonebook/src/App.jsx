@@ -11,6 +11,7 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState("");
 	const [nameFilter, setNameFilter] = useState("");
 	const [message, setMessage] = useState(null);
+	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
 		personService.getAll().then((initialPersons) => {
@@ -33,7 +34,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
-			<Notification message={message} />
+			<Notification message={message} errorMessage={errorMessage} />
 			<Filter nameFilter={nameFilter} handleFilterChange={handleFilterChange} />
 			<h2>add a new</h2>
 			<PersonForm
@@ -42,10 +43,12 @@ const App = () => {
 				newName={newName}
 				newNumber={newNumber}
 				persons={persons}
+				errorMessage={errorMessage}
 				setPersons={setPersons}
 				setNewName={setNewName}
 				setNewNumber={setNewNumber}
 				setMessage={setMessage}
+				setErrorMessage={setErrorMessage}
 			/>
 			<h2>Numbers</h2>
 			<Persons

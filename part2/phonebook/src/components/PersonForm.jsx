@@ -6,10 +6,12 @@ const PersonForm = ({
 	newName,
 	newNumber,
 	persons,
+	errorMessage,
 	setPersons,
 	setNewName,
 	setNewNumber,
 	setMessage,
+	setErrorMessage,
 }) => {
 	const personExists = () => {
 		const personObject = persons.find((person) => person.name === newName);
@@ -45,7 +47,16 @@ const PersonForm = ({
 								person.id !== personObject.id ? person : returnedPerson
 							)
 						);
+					})
+					.catch((error) => {
+						setErrorMessage(
+							`Information of ${newName} has already been removed from server`
+						);
+						setTimeout(() => {
+							setErrorMessage(null);
+						}, 5000);
 					});
+
 				setMessage(`Updated ${newName}`);
 				setTimeout(() => {
 					setMessage(null);
